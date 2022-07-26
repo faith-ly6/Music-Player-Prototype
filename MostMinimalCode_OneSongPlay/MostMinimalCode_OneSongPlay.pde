@@ -8,11 +8,25 @@ import ddf.minim.ugens.*;
 //Global Variables
 Minim minim;//creates object to access all functions
 AudioPlayer song1;//creates a playlist 
+AudioMetaData songMetaData1;
+float xTitle, yTitle, widthTitle, heightTitle;
+color purple=#CC8DDE;
+PFont titleFont;
 //
 void setup () {
+  size (500,400);//Landscape
+  //Be careful to include display orientation checker and display CANVAS checker
   minim = new Minim (this);//load from data directory, loadFile should also oad from project folder, like loadImage
   song1 = minim.loadFile("Culture - Anno Domini Beats.mp3");//able to pass absolute path, file name and estension, and URL 
+  songMetaData1=song1.getMetaData();
   //
+  //Population
+  xTitle = width*1/4;
+  yTitle = height*0;
+  widthTitle = width*1/2;
+  heightTitle = height*1/10;
+  //
+  titleFont = createFont("Harrrington", 55);
   //
 }//End setup
 //
@@ -21,6 +35,15 @@ void draw () {
   if ( song1.isPlaying() && song1.loopCount()==-1 ) println("Looping Infinity");
   if ( song1.isPlaying() && !song1.isLooping() ) println("Play Once");
   println("Song position", song1.position(), "Song Length", song1.length() );
+  //
+  background (#000000);
+  rect(xTitle, yTitle, widthTitle, heightTitle);
+  fill(purple);//Ink
+  textAlign ( CENTER, CENTER);
+  textFont (titleFont, 20);//change size number until it fits
+  text (songMetaData1.title(), xTitle, yTitle, widthTitle, heightTitle);
+  fill (#FFFFFF);
+  //
 }//End draw
 //
 void keyPressed () {
